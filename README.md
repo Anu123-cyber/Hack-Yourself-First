@@ -15,33 +15,25 @@
 1. Open Burp Suite Pro → Go to **Dashboard > New Scan**
 2. Enter the target URL: `https://hack-yourself-first.com`
 3. Check **Target > Issues** tab for auto-detected vulnerabilities
-
 📸 *The following screenshot shows the scanning of the website:*
-
 ![Burp Dashboard](website%20vulnerability_001.jpg)
 ---
 ## 🚨 Vulnerabilities Found
-
 ### 1. 🐞 SQL Injection (High Severity)
-
 **Location 1**:  
 `/CarsByCylinders?Cylinders=V12' OR '1'='1 --`  
 ➡️ Sends injected SQL — Response shows extra data  
 ✅ **Confirmed SQL Injection**
-
 ![SQLi Test](website%20vulnerability_002.jpg)
-
 **Steps:**
 - Sent request to **Repeater**
 - Modified `Cylinders` parameter with `' OR '1'='1 --`
 - Got valid response → more data returned
-
 **Automated via Intruder:**
 - Go to **Intruder > Positions**
 - Set Attack Type: **Sniper**
 - Load SQLi payloads
 - Analyze response lengths for anomalies
-
 ![Intruder Setup](website%20vulnerability_003.jpg)
 ![Intruder Payloads](website%20vulnerability_004.jpg)
 
@@ -52,7 +44,6 @@
 ![SQLi Location 2](website%20vulnerability_005.jpg)
 ---
 ### 2. ✴️ Reflected XSS (High Severity)
-
 **Parameter**: `searchTerm`  
 Payloads tried:
 - `searchTerm=<script>alert(1)</script>` ❌ Not executed
@@ -63,13 +54,10 @@ Payloads tried:
 ![XSS Rendered Output](website%20vulnerability_007.jpg)
 ---
 ### 3. 💾 Stored XSS (High Severity)
-
 **Location**: `/Supercar/10` → Add a comment and vote
-
 **Payload:**
 ```html
 <script>window.location="http://bootlesshacker.com";</script>
-
 ![Description of screenshot](website%20vulnerability_007.jpg)
 ![Description of screenshot](website%20vulnerability_008.jpg)
 ![Description of screenshot](website%20vulnerability_009.jpg)
